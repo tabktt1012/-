@@ -47,20 +47,42 @@
             const registrationFee = parseFloat(document.getElementById('registrationFee').value);
             const bonus = parseFloat(document.getElementById('bonus').value);
 
-            let result;
+            // 預設值
+            const defaultDi = 20;
+            const defaultTai = 60;
 
-            // 根據編號進行不同的計算
-            if (code === '310') {
-                result = (di * 30) + (tai * 10) - ((30 * groupNum * 30) + (70 * groupNum * 10)) - (bonus - registrationFee);
-            } else if (code === '520') {
-                result = (di * 50) + (tai * 20) - ((30 * groupNum * 50) + (70 * groupNum * 20)) - (bonus - registrationFee);
-            } else if (code === '120') {
-                result = (di * 100) + (tai * 20) - ((30 * groupNum * 100) + (70 * groupNum * 20)) - (bonus - registrationFee);
-            } else if (code === '220') {
-                result = (di * 200) + (tai * 20) - ((30 * groupNum * 200) + (70 * groupNum * 20)) - (bonus - registrationFee);
-            } else if (code === '250') {
-                result = (di * 200) + (tai * 50) - ((30 * groupNum * 200) + (70 * groupNum * 50)) - (bonus - registrationFee);
+            // 設定每個編號對應的價格
+            let diPrice;
+            let taiPrice;
+
+            switch (code) {
+                case '310':
+                    diPrice = 30;
+                    taiPrice = 10;
+                    break;
+                case '520':
+                    diPrice = 50;
+                    taiPrice = 20;
+                    break;
+                case '120':
+                    diPrice = 100;
+                    taiPrice = 20;
+                    break;
+                case '220':
+                    diPrice = 200;
+                    taiPrice = 20;
+                    break;
+                case '250':
+                    diPrice = 200;
+                    taiPrice = 50;
+                    break;
+                default:
+                    document.getElementById('result').innerText = '無效的編號';
+                    return; // 結束函數
             }
+
+            // 計算公式
+            const result = (di * diPrice) + (tai * taiPrice) - ((defaultDi * groupNum * diPrice) + (defaultTai * groupNum * taiPrice)) - (bonus - registrationFee);
 
             // 顯示結果
             document.getElementById('result').innerText = result;
